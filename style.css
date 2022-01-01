@@ -38,19 +38,13 @@ body{
 }
 
 .boton {
+    display: flex;
     height: 60px;
     width: 60px;
-    display: flex;
+    margin-left: 30px;
+    margin-right: 30px;
     align-items: center;
     justify-content: center;
     border-radius: 2em;
     background-color: greenyellow;
-}
-
-#start {
-    margin-right: 10px;
-}
-
-#addMins {
-    margin-left: 10px;
 }
