@@ -1,7 +1,8 @@
 function strTime( minutos, segundos  ) {
 
-    let tiempo;
+    let tiempo; //Variable que contendra el tiempo ya formateado.
 
+    //Lógica del formato del tiempo.
     if ( minutos < 10 && segundos < 10 ) 
         tiempo = `0${minutos}:0${segundos}`;
     else if( minutos < 10 && segundos > 9 )
@@ -93,7 +94,8 @@ window.onload = () => {
     //Evento boton de añadir minutos
     addMins.addEventListener('click', ()=>{
 
-        mins += 10; //Añadiendo 10 minutos al timer.    
+        mins += 10; //Añadiendo 10 minutos al timer.  
+
         //Insertando el texto en el div del contador
         timer.innerText = strTime( mins, segs );
 
