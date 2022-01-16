@@ -5,24 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="statics/styles/style.css">
+    <link rel="stylesheet" href="statics/styles/timerAnimation.css">
     <link rel="stylesheet" href="libs/fontawesome-free-5.15.4-web/css/all.css">
     <title>TimerDoro</title>
 </head>
 <body>
-    <div id="timerCont">
-        <div id="timer"></div>
+    <div id="timer" class="centrado">
+        <div class="progress"></div>
+        <div class="progress"></div>
+        <div class="progress-hide"></div>
+        <div class="fondoTimer centrado">
+            60:00
+        </div>
     </div>
 
-    <div id="controls">
+    <div id="controls" class="centrado">
 
         <div class="btn-lssMins boton" id="lssMins">
-            <i class="btn-lssMins fas fa-2x fa-minus"></i>
+            <i class="btn-lssMins fas fa-3x fa-minus-circle"></i>
         </div>
         <div class="btn-start boton" id="start">
-            <i class="btn-start fas fa-2x fa-play"></i>
+            <i class="btn-start fas fa-3x fa-play-circle"></i>
         </div>
         <div class="btn-addMins boton" id="addMins">
-            <i class="btn-addMins fas fa-2x fa-plus"></i>
+            <i class="btn-addMins fas fa-3x fa-plus-circle"></i>
         </div>
 
     </div>

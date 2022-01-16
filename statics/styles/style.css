@@ -5,32 +5,86 @@ body{
     height: 100%;
 }
 
-#timerCont {
-    width: 100%;
-    height: 50%;
-    margin-top: 5%;
+/* =TIMER
+-----------------------------------------------------------------------*/
+
+#timer {
+    width: 350px;
+    height: 350px;
+    background-color: yellowgreen;
+    border-radius: 50%;
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%);
+    overflow: hidden;
+}
+
+.centrado {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#timer {
-    width: 350px;
-    height: 350px;
-    box-sizing: border-box;
-    text-align: center;
-    line-height: 10ex;
-    color: white;
-    border: 20px solid greenyellow;
-    border-radius: 100%;
+.fondoTimer {
+    width: 320px;
+    height: 320px;
+    background-color: rgb(29, 29, 56);
+    border-radius: 50%;
+    color: aliceblue;
     font-family: sans-serif;
     font-size: 4em;
+    z-index: 10;
 }
 
+/*=ANIMACION TIMER
+---------------------------------------------------------------*/
+
+.progress,
+.progress-hide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    transform-origin: right center;
+}
+
+.progress:nth-child(1) {
+    background-color: aliceblue; 
+}
+
+.progress:nth-child(2) {
+    background-color: aliceblue; 
+}
+
+.progress-hide {
+    background-color: yellowgreen; 
+}
+
+/* #timer:hover .progress:nth-child(1) {
+    transform: rotate(180deg);
+    transition: transform 1s linear;
+}
+
+#timer:hover .progress:nth-child(2) {
+    transform: rotate(360deg);
+    transition: transform 2s linear;
+}
+
+#timer:hover .progress-hide {
+    opacity: 0;
+    transition: opacity 0s 1s;
+} */
+
+/*=CONTROLES
+----------------------------------------------------------------------*/
+
 #controls {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
+    position: fixed;
+    bottom: 20%;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 .boton:hover {
