@@ -3,7 +3,7 @@ function strTime( totalM, totalS, minutos, segundos  ) {
     let tiempo; //Variable que contendra el tiempo ya formateado.
     
     // Variables calculo grados
-    let tiempoGrafico = totalM * 60 + totalS;
+    let tiempoGrafico = (totalM * 60) + totalS;
     let tiempoGrados = (minutos * 60) + segundos;
 
     // Variables de divs del progress circle.
@@ -43,9 +43,9 @@ window.onload = () => {
     /*VARIABLES
     --------------------------------------------------------------------------------*/
     //De tiempo
-    let MINUTOS = 60;
+    let MINUTOS = 60; // Total de minutos y segundos que recorrerá el timer
     let SEGUNDOS = 0;
-    let mins = MINUTOS;
+    let mins = MINUTOS; // Variables que controlarán el paso del tiempo
     let segs = SEGUNDOS;
     
     //Intervals
@@ -54,19 +54,16 @@ window.onload = () => {
     //Timer
     let timer = document.querySelector(".fondoTimer");
     
-    // const fondoTimer =  document.querySelector('.fondoTimer');
-
     timer.innerText = strTime(MINUTOS, SEGUNDOS, mins, segs); //Inicializacion del timer y el circulo de progreso.
 
     //Botones
     let controles = document.getElementById("controls");
     let start = document.getElementById("start");
-    // let addMins = document.getElementById("addMins");
 
     //Audio.
     const final = new Audio("./statics/media/finish.mp3");
 
-    /*EVENTOS CLICK
+    /*EVENTOS CLICK (con delegación de eventos)
     ---------------------------------------------------------------------------------*/
     controles.addEventListener("click", (evento) => {
 
@@ -77,7 +74,7 @@ window.onload = () => {
             evento.target.className.indexOf("addMins")
         ];
         
-        //Evento boton inicio( usando delegación de eventos )
+        //Evento boton inicio
         if ( ControlBtn[1] !== -1 ) {
 
             //Condicional para determinar play y pause del interval
@@ -135,9 +132,6 @@ window.onload = () => {
             MINUTOS += 10; //Añadiendo 10 minutos a variable de control del tiempo.  
             mins += 10; //Añadiendo 10 minutos al timer.
             
-            // console.log(MINUTOS, "SUMA");
-            // console.log(mins, "suma");
-
             //Insertando el texto en el div del contador y poniendo parte grafica.
             timer.innerText = strTime( MINUTOS, SEGUNDOS, mins, segs );
         
@@ -146,9 +140,6 @@ window.onload = () => {
             MINUTOS = mins>=5? MINUTOS - 5:MINUTOS; //Restando 5 minutos a variable de control del tiempo.
             mins = mins>=5? mins - 5:mins; //Restando 5 minutos al timer.  
             
-            // console.log(MINUTOS, "RESTA");
-            // console.log(mins, "resta");
-
             //Insertando el texto en el div del contador y poniendo parte grafica.
             timer.innerText = strTime( MINUTOS, SEGUNDOS, mins, segs );
         

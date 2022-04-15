@@ -62,21 +62,6 @@ body{
     background-color: yellowgreen; 
 }
 
-/* #timer:hover .progress:nth-child(1) {
-    transform: rotate(180deg);
-    transition: transform 1s linear;
-}
-
-#timer:hover .progress:nth-child(2) {
-    transform: rotate(360deg);
-    transition: transform 2s linear;
-}
-
-#timer:hover .progress-hide {
-    opacity: 0;
-    transition: opacity 0s 1s;
-} */
-
 /*=CONTROLES
 ----------------------------------------------------------------------*/
 
