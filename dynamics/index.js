@@ -77,10 +77,14 @@ window.onload = () => {
         //Evento boton inicio
         if ( ControlBtn[1] !== -1 ) {
 
-            //Condicional para determinar play y pause del interval
-            if( start.innerHTML === '\n            <i class="btn-start fas fa-3x fa-play-circle"></i>\n        ' || start.innerHTML === '<i class="btn-start fas fa-3x fa-play-circle"></i>' ) {
+            let iconClasses = start.children[0].classList;
 
-                start.innerHTML = '<i class="btn-start fas fa-3x fa-pause-circle"></i>'; //Cambiando el icno del botón a Pausar.
+            //Condicional para determinar play y pause del interval
+            if( iconClasses.contains("fa-play-circle") ) {
+
+                //Cambiando el icno del botón a Pausar.
+                start.children[0].classList.add("fa-pause-circle"); 
+                start.children[0].classList.remove("fa-play-circle");
 
                 //Intervalo que lleva el tiempo
                 intervalo = setInterval( () => {
@@ -91,7 +95,9 @@ window.onload = () => {
                         
                         clearInterval( intervalo ); //Limpiando el intervalo.
                         
-                        start.innerHTML = '<i class="btn-start fas fa-3x fa-play-circle"></i>'; //Cambiando el icono del boton a Play.
+                        //Cambiando el icono del boton a Play.
+                        start.children[0].classList.remove("fa-pause-circle"); 
+                        start.children[0].classList.add("fa-play-circle");
                         
                         //Reproducciendo el sonido de final.
                         final.play();
@@ -118,12 +124,14 @@ window.onload = () => {
                     
                 }, 1000 );
 
-            } else {
+            } else if ( iconClasses.contains("fa-pause-circle") ){
 
                 //Limpiando el intervalo para la pausa.
                 clearInterval( intervalo );
 
-                start.innerHTML = '<i class="btn-start fas fa-3x fa-play-circle"></i>'; //Cambiando el icono del boton a Play.
+                //Cambiando el icono del boton a Play.
+                start.children[0].classList.remove("fa-pause-circle"); 
+                start.children[0].classList.add("fa-play-circle");
 
             }
 
