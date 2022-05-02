@@ -104,7 +104,7 @@ window.onload = () => {
                         // Reproducciendo el sonido de final.
                         final.play();
                         
-                        //
+                        // Se elimina la clase de la animación
                         final.addEventListener("ended", ()=>{
                             timer.classList.remove("timerEnd")
                         });
