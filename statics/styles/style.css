@@ -7,7 +7,6 @@ body{
 
 /* =TIMER
 -----------------------------------------------------------------------*/
-
 #timer {
     width: 350px;
     height: 350px;
@@ -39,7 +38,6 @@ body{
 
 /*=ANIMACION TIMER
 ---------------------------------------------------------------*/
-
 .progress,
 .progress-hide {
     position: absolute;
@@ -64,7 +62,6 @@ body{
 
 /*=CONTROLES
 ----------------------------------------------------------------------*/
-
 #controls {
     position: fixed;
     bottom: 20%;
@@ -86,4 +83,26 @@ body{
     justify-content: center;
     border-radius: 2em;
     background-color: greenyellow;
+}
+
+/*=ANIMACIONES DE TRANSICION
+-----------------------------------------------------------------------*/
+
+.timerEnd {
+    animation: fondoTimerTransition 1.2s ease 4;
+}
+
+@keyframes fondoTimerTransition {
+    0%{
+        width: 320px;
+        height: 320px;
+    } 
+    50%{
+        width: 340px;
+        height: 340px;
+    }
+    100%{
+        width: 320px;
+        height: 320px;
+    }
 }

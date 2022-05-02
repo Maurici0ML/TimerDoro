@@ -1,6 +1,6 @@
 function strTime( totalM, totalS, minutos, segundos  ) {
 
-    let tiempo; //Variable que contendra el tiempo ya formateado.
+    let tiempo; // Variable que contendra el tiempo ya formateado.
     
     // Variables calculo grados
     let tiempoGrafico = (totalM * 60) + totalS;
@@ -10,7 +10,7 @@ function strTime( totalM, totalS, minutos, segundos  ) {
     const progress = document.querySelectorAll('.progress');
     const progressHide =  document.querySelector('.progress-hide');
     
-    //LOGICA DE EL PROGRESS CIRCLE ---------------------------------------
+    // LOGICA DE EL PROGRESS CIRCLE ---------------------------------------
     tiempoGrados = (tiempoGrados / tiempoGrafico) * 360;
     tiempoGrados = 360-tiempoGrados; //Grados de acuerdo al tiempo.
 
@@ -24,7 +24,7 @@ function strTime( totalM, totalS, minutos, segundos  ) {
         }
     });
 
-    //LÓGICA DEL FORMATO DEL TIEMPO ---------------------------------------
+    // LÓGICA DEL FORMATO DEL TIEMPO ---------------------------------------
     if ( minutos < 10 && segundos < 10 ) 
         tiempo = `0${minutos}:0${segundos}`;
     else if( minutos < 10 && segundos > 9 )
@@ -40,9 +40,9 @@ function strTime( totalM, totalS, minutos, segundos  ) {
 
 window.onload = () => {
     
-    /*VARIABLES
+    /* VARIABLES
     --------------------------------------------------------------------------------*/
-    //De tiempo
+    // De tiempo
     let MINUTOS = 60; // Total de minutos y segundos que recorrerá el timer
     let SEGUNDOS = 0;
     let mins = MINUTOS; // Variables que controlarán el paso del tiempo
@@ -51,85 +51,92 @@ window.onload = () => {
     //Intervals
     let intervalo;
 
-    //Timer
+    // Timer
     let timer = document.querySelector(".fondoTimer");
     
     timer.innerText = strTime(MINUTOS, SEGUNDOS, mins, segs); //Inicializacion del timer y el circulo de progreso.
 
-    //Botones
+    // Botones
     let controles = document.getElementById("controls");
     let start = document.getElementById("start");
 
-    //Audio.
+    // Audio.
     const final = new Audio("./statics/media/finish.mp3");
 
-    /*EVENTOS CLICK (con delegación de eventos)
+    /* EVENTOS CLICK (con delegación de eventos)
     ---------------------------------------------------------------------------------*/
     controles.addEventListener("click", (evento) => {
 
-        //Constante que guarda el estado de los botones (-1 si no fue tocado)
+        // Constante que guarda el estado de los botones (-1 si no fue tocado)
         const ControlBtn = [
             evento.target.className.indexOf("lssMins"),
             evento.target.className.indexOf("start"), 
             evento.target.className.indexOf("addMins")
         ];
         
-        //Evento boton inicio
+        // Evento boton inicio
         if ( ControlBtn[1] !== -1 ) {
 
             let iconClasses = start.children[0].classList;
 
-            //Condicional para determinar play y pause del interval
+            // Condicional para determinar play y pause del interval
             if( iconClasses.contains("fa-play-circle") ) {
 
                 //Cambiando el icno del botón a Pausar.
                 start.children[0].classList.add("fa-pause-circle"); 
                 start.children[0].classList.remove("fa-play-circle");
 
-                //Intervalo que lleva el tiempo
+                // Intervalo que lleva el tiempo
                 intervalo = setInterval( () => {
                     
-                    //MANEJO DEL TIEMPO----------------------------------------------------------------------------------------------------
-                    //Cuando el contador llegue a 0...
+                    // MANEJO DEL TIEMPO----------------------------------------------------------------------------------------------------
+                    // Cuando el contador llegue a 0...
                     if( mins === 0 && segs === 0 ) {
                         
-                        clearInterval( intervalo ); //Limpiando el intervalo.
+                        clearInterval( intervalo ); // Limpiando el intervalo.
+
+                        timer.classList.add("timerEnd"); // Animación de cuando el timer llegó a 0
                         
-                        //Cambiando el icono del boton a Play.
+                        // Cambiando el icono del boton a Play.
                         start.children[0].classList.remove("fa-pause-circle"); 
                         start.children[0].classList.add("fa-play-circle");
                         
-                        //Reproducciendo el sonido de final.
+                        // Reproducciendo el sonido de final.
                         final.play();
                         
-                        //Reiniciando el contador 
+                        //
+                        final.addEventListener("ended", ()=>{
+                            timer.classList.remove("timerEnd")
+                        });
+                        
+                        // Reiniciando el contador 
                         MINUTOS = 60;
                         SEGUNDOS = 0;                    
                         mins = MINUTOS;
                         segs = SEGUNDOS;
                         
-                    } else if( segs === 0 ) {   //Manejo de los segundos y minutos.
+                    } else if( segs === 0 ) {   // Manejo de los segundos y minutos.
                         
                         segs = 60;
                         mins--;
                         
                     }
                     
-                    //Restando los segundos.
+                    // Restando los segundos.
                     segs--;
                     segs = segs === -1? 0:segs;
                     
-                    //Insertando el texto en el div del contador y poniendo parte grafica.
+                    // Insertando el texto en el div del contador y poniendo parte grafica.
                     timer.innerText = strTime( MINUTOS, SEGUNDOS, mins, segs );
                     
                 }, 1000 );
 
             } else if ( iconClasses.contains("fa-pause-circle") ){
 
-                //Limpiando el intervalo para la pausa.
+                // Limpiando el intervalo para la pausa.
                 clearInterval( intervalo );
 
-                //Cambiando el icono del boton a Play.
+                // Cambiando el icono del boton a Play.
                 start.children[0].classList.remove("fa-pause-circle"); 
                 start.children[0].classList.add("fa-play-circle");
 
@@ -137,18 +144,18 @@ window.onload = () => {
 
         } else if( ControlBtn[2] != -1 ) { // Evento boton de añadir minutos
 
-            MINUTOS += 10; //Añadiendo 10 minutos a variable de control del tiempo.  
-            mins += 10; //Añadiendo 10 minutos al timer.
+            MINUTOS += 10; // Añadiendo 10 minutos a variable de control del tiempo.  
+            mins += 10; // Añadiendo 10 minutos al timer.
             
-            //Insertando el texto en el div del contador y poniendo parte grafica.
+            // Insertando el texto en el div del contador y poniendo parte grafica.
             timer.innerText = strTime( MINUTOS, SEGUNDOS, mins, segs );
         
         } else if( ControlBtn[0] != -1 ) { // Evento boton de quitar minutos
 
-            MINUTOS = mins>=5? MINUTOS - 5:MINUTOS; //Restando 5 minutos a variable de control del tiempo.
-            mins = mins>=5? mins - 5:mins; //Restando 5 minutos al timer.  
+            MINUTOS = mins>=5? MINUTOS - 5:MINUTOS; // Restando 5 minutos a variable de control del tiempo.
+            mins = mins>=5? mins - 5:mins; // Restando 5 minutos al timer.  
             
-            //Insertando el texto en el div del contador y poniendo parte grafica.
+            // Insertando el texto en el div del contador y poniendo parte grafica.
             timer.innerText = strTime( MINUTOS, SEGUNDOS, mins, segs );
         
         }
