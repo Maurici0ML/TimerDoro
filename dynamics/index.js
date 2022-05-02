@@ -42,27 +42,29 @@ window.onload = () => {
     
     /*VARIABLES
     --------------------------------------------------------------------------------*/
-    //De tiempo
-    let MINUTOS = 60; // Total de minutos y segundos que recorrerá el timer
+    // De tiempo
+    let MINUTOS = 30; // Total de minutos y segundos que recorrerá el timer
     let SEGUNDOS = 0;
     let mins = MINUTOS; // Variables que controlarán el paso del tiempo
     let segs = SEGUNDOS;
     
-    //Intervals
+    // Intervals
     let intervalo;
 
-    //Timer
+    // Timer
     let timer = document.querySelector(".fondoTimer");
     
     timer.innerText = strTime(MINUTOS, SEGUNDOS, mins, segs); //Inicializacion del timer y el circulo de progreso.
 
-    //Botones
+    // Botones
     let controles = document.getElementById("controls");
     let start = document.getElementById("start");
 
-    //Audio.
-    const final = new Audio("./statics/media/finish.mp3");
-
+    // Audio.
+    // const final = new Audio("./statics/media/finish.mp3");
+    const video = document.getElementById("video");
+    video.style.display = "none";
+    
     /*EVENTOS CLICK (con delegación de eventos)
     ---------------------------------------------------------------------------------*/
     controles.addEventListener("click", (evento) => {
@@ -76,16 +78,16 @@ window.onload = () => {
         
         //Evento boton inicio
         if ( ControlBtn[1] !== -1 ) {
-
+            
             let iconClasses = start.children[0].classList;
-
+            
             //Condicional para determinar play y pause del interval
             if( iconClasses.contains("fa-play-circle") ) {
-
+                
                 //Cambiando el icno del botón a Pausar.
                 start.children[0].classList.add("fa-pause-circle"); 
                 start.children[0].classList.remove("fa-play-circle");
-
+                
                 //Intervalo que lleva el tiempo
                 intervalo = setInterval( () => {
                     
@@ -95,15 +97,20 @@ window.onload = () => {
                         
                         clearInterval( intervalo ); //Limpiando el intervalo.
                         
+                        timer.classList.add("timerEnd"); // Animación de cuando el timer llegó a 0
+                        
                         //Cambiando el icono del boton a Play.
                         start.children[0].classList.remove("fa-pause-circle"); 
                         start.children[0].classList.add("fa-play-circle");
                         
                         //Reproducciendo el sonido de final.
-                        final.play();
+                        // final.play();
+                        video.style.display = "block";
+                        document.getElementById("timer").style.display = "none";
+                        video.play();
                         
                         //Reiniciando el contador 
-                        MINUTOS = 60;
+                        MINUTOS = 30;
                         SEGUNDOS = 0;                    
                         mins = MINUTOS;
                         segs = SEGUNDOS;
@@ -123,9 +130,9 @@ window.onload = () => {
                     timer.innerText = strTime( MINUTOS, SEGUNDOS, mins, segs );
                     
                 }, 1000 );
-
+                
             } else if ( iconClasses.contains("fa-pause-circle") ){
-
+                
                 //Limpiando el intervalo para la pausa.
                 clearInterval( intervalo );
 
@@ -137,8 +144,8 @@ window.onload = () => {
 
         } else if( ControlBtn[2] != -1 ) { // Evento boton de añadir minutos
 
-            MINUTOS += 10; //Añadiendo 10 minutos a variable de control del tiempo.  
-            mins += 10; //Añadiendo 10 minutos al timer.
+            MINUTOS += 10; // Añadiendo 10 minutos a variable de control del tiempo.  
+            mins += 10; // Añadiendo 10 minutos al timer.
             
             //Insertando el texto en el div del contador y poniendo parte grafica.
             timer.innerText = strTime( MINUTOS, SEGUNDOS, mins, segs );
