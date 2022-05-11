@@ -3,6 +3,7 @@ body{
     margin: 0;
     width: 100%;
     height: 100%;
+    font-family: sans-serif;
 }
 
 /* =TIMER
@@ -31,7 +32,6 @@ body{
     background-color: rgb(29, 29, 56);
     border-radius: 50%;
     color: aliceblue;
-    font-family: sans-serif;
     font-size: 4em;
     z-index: 10;
 }
@@ -85,6 +85,29 @@ body{
     background-color: greenyellow;
 }
 
+
+/*=MODAL---------------------------------------------------------------*/
+.modalCont {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: rgba(69, 116, 0, 0.597);
+}
+
+.modalWindow {
+    width: 400px;
+    height: 300px;
+    position: fixed;
+    text-align: center;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    background-color: aliceblue;
+}
+
+#inputTiempo {
+    margin-top: 17%;
+}
 /*=ANIMACIONES DE TRANSICION
 -----------------------------------------------------------------------*/
 

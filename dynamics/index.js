@@ -5,18 +5,19 @@ let segundos = 0;
 let mins = minutos; // Variables que controlarán el paso del tiempo
 let segs = segundos;
 
-// Audio.
-const final = new Audio("./statics/media/finish.mp3");
-
 // Timer.
 const timer = document.querySelector(".fondoTimer");
 
+// Intervals.
+let intervalo;
+
+// FUNCIONES.
 // Función que grafica el timer.
 function strTime( totalM, totalS, strMinutos=totalM, strSegundos=totalS  ) {
 
     let tiempo; // Variable que contendra el tiempo ya formateado.
     
-    // Variables calculo grados
+    // Variables calculo grados.
     let tiempoGrafico = (totalM * 60) + totalS;
     let tiempoGrados = (strMinutos * 60) + strSegundos;
 
@@ -54,9 +55,14 @@ function strTime( totalM, totalS, strMinutos=totalM, strSegundos=totalS  ) {
 
 // Función que lleva el manejo del tiempo.
 function tiempoInterval() {
+    
+    // Audio.
+    const final = new Audio("./statics/media/finish.mp3");
 
     // Cuando el contador llegue a 0...
     if(mins === 0 && segs === 0) {
+
+        clearInterval( intervalo ); // Limpiando el intervalo.
 
         timer.classList.add("timerEnd"); // Animación de cuando el timer llegó a 0.
         
@@ -64,8 +70,7 @@ function tiempoInterval() {
         start.children[0].classList.remove("fa-pause-circle"); 
         start.children[0].classList.add("fa-play-circle");
         
-        // Reproducciendo el sonido de final.
-        final.play();
+        final.play(); // Sonido final.
         
         // Se elimina la clase de la animación
         final.addEventListener("ended", ()=>{
@@ -99,15 +104,13 @@ function cambiaTiempo (newMins, newSegs) {
 
     minutos = newMins;
     segundos = newSegs;
-
+    mins = minutos;
+    segs = segundos;
     strTime(minutos, segundos);
 
 }
 
 window.onload = () => {
-    
-    //Intervals
-    let intervalo;
     
     strTime(minutos, segundos); //Inicializacion del timer y el circulo de progreso.
 
@@ -129,26 +132,17 @@ window.onload = () => {
         // Evento boton inicio/pausa.
         if ( ControlBtn[1] !== -1 ) {
 
-            let iconClasses = start.children[0].classList;
+            let iconClasses = start.children[0].classList; //Obtiene las clases del botón.
 
             // Condicional para determinar play y pause del interval.
             if( iconClasses.contains("fa-play-circle") ) {
 
-                // Cambiando el icno del botón a Pausar.
+                // Cambiando el icono del botón a Pausar.
                 start.children[0].classList.add("fa-pause-circle"); 
                 start.children[0].classList.remove("fa-play-circle");
 
-                // Intervalo que lleva el tiempo
-                intervalo = setInterval( ()=>{
-                    tiempoInterval();
-                    if (mins === 0 && segs === 0) {
-                        tiempoInterval();
-                        console.log("Ya krunkeo");
-                        clearInterval( intervalo ); // Limpiando el intervalo.
-                    }
-                }, 1000 );
-
-                
+                // Intervalo del que depende TODO EL TIMER.
+                intervalo = setInterval( tiempoInterval ,1000 );
 
             } else if ( iconClasses.contains("fa-pause-circle") ){
 
