@@ -108,6 +108,8 @@ window.onload = () => {
                         video.style.display = "block";
                         document.getElementById("timer").style.display = "none";
                         video.play();
+                        // video.loop = true;
+                        // video.volume = 0.1;
                         
                         //Reiniciando el contador 
                         MINUTOS = 30;
