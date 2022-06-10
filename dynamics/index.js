@@ -78,8 +78,8 @@ function tiempoInterval() {
         });
         
         // Reiniciando el contador 
-        minutos = 60;
-        segundos = 0;                    
+        minutos = minutos;
+        segundos = segundos;                    
         mins = minutos;
         segs = segundos;
         
@@ -88,11 +88,11 @@ function tiempoInterval() {
         segs = 60;
         mins--;
         
+    } else {
+        // Restando los segundos.
+        segs--;
+        segs = segs === -1? 0:segs;
     }
-    
-    // Restando los segundos.
-    segs--;
-    segs = segs === -1? 0:segs;
     
     // Insertando el texto en el div del contador y poniendo parte grafica.
     strTime( minutos, segundos, mins, segs );
