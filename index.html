@@ -5,11 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="statics/styles/style.css">
-    <link rel="stylesheet" href="statics/styles/timerAnimation.css">
     <link rel="stylesheet" href="libs/fontawesome-free-5.15.4-web/css/all.css">
     <title>TimerDoro</title>
 </head>
 <body>
+    <!-- Settings -->
+    <button id="settings" class="boton"><i class="fas fa-cog fa-3x"></i></button>
 
     <!-- Timer principal -->
     <div id="timer" class="centrado">
@@ -22,30 +23,28 @@
 
     <!-- Controles -->
     <div id="controls" class="centrado">
-        <div class="btn-lssMins boton" id="lssMins">
+        <button class="btn-lssMins boton" id="lssMins">
             <i class="btn-lssMins fas fa-3x fa-minus-circle"></i>
-        </div>
-        <div class="btn-start boton" id="start">
+        </button>
+        <button class="btn-start boton" id="start">
             <i class="btn-start fas fa-3x fa-play-circle"></i>
-        </div>
-        <div class="btn-addMins boton" id="addMins">
+        </button>
+        <button class="btn-addMins boton" id="addMins">
             <i class="btn-addMins fas fa-3x fa-plus-circle"></i>
-        </div>
+        </button>
     </div>
 
-    <div class="modalCont">
+    <div class="modalCont" id="modalConfig">
         <div class="modalWindow">
-            <button>Exit</button>
-            <h1>Duración</h1>
-            <label for="tiempo">Minutos: 
-                <input type="number" id="inputMins" value="60:00">
+            <button class="btn-close"><i class="fas fa-times-circle fa-2x"></i></button>
+            <h1 id="configuracion">Configuración</h1>
+            <label>Minutos :
+                <input class='inputTime' type="number" min="0">
             </label>
-            <br><br>
-            <label for="tiempo">Segundos: 
-                <input type="number" id="inputSegs" value="60:00">
+            <label>Segundos:
+                <input class='inputTime' type="number" min="0" max="60">
             </label>
-            <br>
-            <button>Aceptar</button>
+            <button id="aceptar">Aceptar</button>
         </div>
     </div>
 

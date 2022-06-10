@@ -110,69 +110,103 @@ function cambiaTiempo (newMins, newSegs) {
 
 }
 
-window.onload = () => {
+strTime(minutos, segundos); //Inicializacion del timer y el circulo de progreso.
+
+// Botones
+let controles = document.getElementById("controls");
+let start = document.getElementById("start");
+
+/* EVENTOS de controles.
+---------------------------------------------------------------------------------*/
+controles.addEventListener("click", (evento) => {
+
+    // Constante que guarda el estado de los botones (-1 si no fue tocado)
+    const ControlBtn = [
+        evento.target.className.indexOf("lssMins"),
+        evento.target.className.indexOf("start"), 
+        evento.target.className.indexOf("addMins")
+    ];
     
-    strTime(minutos, segundos); //Inicializacion del timer y el circulo de progreso.
+    // Evento boton inicio/pausa.
+    if ( ControlBtn[1] !== -1 ) {
 
-    // Botones
-    let controles = document.getElementById("controls");
-    let start = document.getElementById("start");
+        let iconClasses = start.children[0].classList; //Obtiene las clases del botón.
 
-    /* EVENTOS de controles.
-    ---------------------------------------------------------------------------------*/
-    controles.addEventListener("click", (evento) => {
+        // Condicional para determinar play y pause del interval.
+        if( iconClasses.contains("fa-play-circle") ) {
 
-        // Constante que guarda el estado de los botones (-1 si no fue tocado)
-        const ControlBtn = [
-            evento.target.className.indexOf("lssMins"),
-            evento.target.className.indexOf("start"), 
-            evento.target.className.indexOf("addMins")
-        ];
-        
-        // Evento boton inicio/pausa.
-        if ( ControlBtn[1] !== -1 ) {
+            // Cambiando el icono del botón a Pausar.
+            start.children[0].classList.add("fa-pause-circle"); 
+            start.children[0].classList.remove("fa-play-circle");
 
-            let iconClasses = start.children[0].classList; //Obtiene las clases del botón.
+            // Intervalo del que depende TODO EL TIMER.
+            intervalo = setInterval( tiempoInterval ,1000 );
 
-            // Condicional para determinar play y pause del interval.
-            if( iconClasses.contains("fa-play-circle") ) {
+        } else if ( iconClasses.contains("fa-pause-circle") ){
 
-                // Cambiando el icono del botón a Pausar.
-                start.children[0].classList.add("fa-pause-circle"); 
-                start.children[0].classList.remove("fa-play-circle");
+            // Limpiando el intervalo para la pausa.
+            clearInterval( intervalo );
 
-                // Intervalo del que depende TODO EL TIMER.
-                intervalo = setInterval( tiempoInterval ,1000 );
+            // Cambiando el icono del boton a Play.
+            start.children[0].classList.remove("fa-pause-circle"); 
+            start.children[0].classList.add("fa-play-circle");
 
-            } else if ( iconClasses.contains("fa-pause-circle") ){
-
-                // Limpiando el intervalo para la pausa.
-                clearInterval( intervalo );
-
-                // Cambiando el icono del boton a Play.
-                start.children[0].classList.remove("fa-pause-circle"); 
-                start.children[0].classList.add("fa-play-circle");
-
-            }
-
-        } else if( ControlBtn[2] != -1 ) { // Evento boton de añadir minutos
-
-            minutos += 10; // Añadiendo 10 minutos a variable de control del tiempo.  
-            mins += 10; // Añadiendo 10 minutos al timer.
-            
-            // Insertando el texto en el div del contador y poniendo parte grafica.
-            strTime( minutos, segundos, mins, segs );
-        
-        } else if( ControlBtn[0] != -1 ) { // Evento boton de quitar minutos
-
-            minutos = mins>=5? minutos - 5:minutos; // Restando 5 minutos a variable de control del tiempo.
-            mins = mins>=5? mins - 5:mins; // Restando 5 minutos al timer.  
-            
-            // Insertando el texto en el div del contador y poniendo parte grafica.
-            strTime( minutos, segundos, mins, segs );
-        
         }
-        
-    });
 
-}
+    } else if( ControlBtn[2] != -1 ) { // Evento boton de añadir minutos
+
+        minutos += 10; // Añadiendo 10 minutos a variable de control del tiempo.  
+        mins += 10; // Añadiendo 10 minutos al timer.
+        
+        // Insertando el texto en el div del contador y poniendo parte grafica.
+        strTime( minutos, segundos, mins, segs );
+    
+    } else if( ControlBtn[0] != -1 ) { // Evento boton de quitar minutos
+
+        minutos = mins>=5? minutos - 5:minutos; // Restando 5 minutos a variable de control del tiempo.
+        mins = mins>=5? mins - 5:mins; // Restando 5 minutos al timer.  
+        
+        // Insertando el texto en el div del contador y poniendo parte grafica.
+        strTime( minutos, segundos, mins, segs );
+    
+    }
+    
+});
+
+/* EVENTOS de modal.
+---------------------------------------------------------------------------------*/
+const modalCont = document.getElementById('modalConfig');
+const modal = document.getElementsByClassName('modalWindow')[0]; 
+
+const settingsBtn = document.getElementById("settings");
+
+settingsBtn.addEventListener('click', ()=>{
+    modalCont.style.display = 'block';
+});
+
+modal.addEventListener('click', (evento) => {
+    
+    const closeClick = (evento.target.classList.contains('btn-close') || evento.target.classList.contains('fa-times-circle')); // clic icono o btn = true
+    
+    if  (closeClick){ // Si presiona en cerrar
+
+      modalCont.style.display = 'none';  
+      
+    } else if (evento.target.id === 'aceptar') { // Si presiona en aceptar
+
+        const minutos = parseInt(document.getElementsByClassName('inputTime')[0].value);
+        const segundos = parseInt(document.getElementsByClassName('inputTime')[1].value);
+        
+        const nanString = (typeof minutos === "number" || typeof segundos === "number") && (segundos !== NaN && minutos !== NaN) && (segundos <= 60 && segundos >= 0 && minutos >= 0);
+
+        if(nanString) { // Validación de no vacío y no letras
+            cambiaTiempo(minutos, segundos);
+        }
+
+        // Reiniciando el input y quitando el modal
+        document.getElementsByClassName('inputTime')[0].value = "";
+        document.getElementsByClassName('inputTime')[1].value = "";
+        modalCont.style.display = 'none';
+
+    } 
+});
